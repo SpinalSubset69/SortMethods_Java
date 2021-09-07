@@ -1,4 +1,7 @@
-import javax.management.openmbean.OpenMBeanConstructorInfo;
+package logic;
+
+import models.Report;
+
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.text.DecimalFormat;
@@ -9,11 +12,11 @@ public class HandleFiles {
     private String text;
     private DefaultTableModel model;
 
-    HandleFiles(){
+    public HandleFiles(){
         this.cont = 0;
     }
 
-    HandleFiles(DefaultTableModel model){
+    public HandleFiles(DefaultTableModel model){
         this.model = model;
     }
 

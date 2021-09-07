@@ -1,17 +1,19 @@
+package GUI;
+
+import GUI.ChartFrame;
+import models.Report;
+import logic.RandomNumberGenerator;
+import logic.HandleFiles;
+import logic.SortMethods;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 
 public class MainFrameComponents {
@@ -34,7 +36,7 @@ public class MainFrameComponents {
     private Util util = new Util();
     private SortMethods sort_array = new SortMethods();
     private HandleFiles file = new HandleFiles();
-    private String[] HEADERS = {"Ejecución", "Metodo", "Tiempo de ejecucion"};
+    private MainFrameComponentsStyles styles = new MainFrameComponentsStyles();
 
     public JButton Btn_Graphic(){
         btn_graphic = new JButton("Generar Gráfica");
@@ -112,20 +114,8 @@ public class MainFrameComponents {
     }
 
     public JTable DataGrid(){
-        Object[][] data =  data = new Object[1][3];
-        data[0][0]= "";
-        data[0][1]= "";
-        data[0][2]= "";
-        model = new DefaultTableModel(data, HEADERS);
-        data_grid = new JTable(model);
-        data_grid.getTableHeader().setFont(new Font("Consolas", Font.BOLD, 14));
-        data_grid.setFocusable(false);
-        data_grid.setFont(new Font("Consolas", Font.PLAIN, 14));
-        data_grid.setEnabled(false);
-
-        //Fill data grid with info
-        HandleFiles f1 = new HandleFiles(this.model);
-        f1.ShowDataOnGrid();
+        this.model = styles.dataGridModel();
+        data_grid = styles.dataGridStyles(this.model);
         return data_grid;
     }
 
@@ -156,16 +146,16 @@ public class MainFrameComponents {
         sort.addActionListener(e -> {
             switch (sort_options.getSelectedItem().toString()){
                 case "Método Burbuja":
-                    SortArray("Burble");
+                    SortArray("Método Burbuja");
                     break;
                 case "Método Shell":
-                    SortArray("Shell");
+                    SortArray("Método Shell");
                     break;
                 case "Método Inserción":
-                    SortArray("Insertion");
+                    SortArray("Método Insertion");
                     break;
                 case "Método Selección":
-                    SortArray("Selection");
+                    SortArray("Método Selection");
                     break;
                 case "Merge":
                     System.out.println("Merge");
@@ -191,19 +181,10 @@ public class MainFrameComponents {
     }
 
     public void SortArray(String sort_method){
-        double time_start, time_end, total_time;
-        time_start = System.currentTimeMillis();
-        array = sort_array.SortMethod(array, sort_method);
-        time_end = System.currentTimeMillis();
-        total_time = (time_end - time_start) / 1000;
-
+        array = util.sortArray(array, sort_method, this.model);
         PaintNumbers(array);
-        CreateFile(total_time);
         sort.setEnabled(false);
-
-        //Display data on table
-        HandleFiles f1 = new HandleFiles(this.model);
-        f1.ShowDataOnGrid();
+        util.ShowMessage("Arreglo Ordenado, se ha generado un archivo con el reporte", "Sort Methods", 1);
     }
 
     public void CreateFile(Double total_time){

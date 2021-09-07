@@ -1,17 +1,19 @@
+package logic;
+
 public class SortMethods {
 
     public int[] SortMethod(int[] array, String sortMethod){
         switch (sortMethod){
-            case "Burble":
+            case "Método Burbuja":
                 array = BubleSort(array);
                 break;
-            case "Insertion":
+            case "Método Insertion":
                 array = InsertionSort(array);
                 break;
-            case "Selection":
+            case "Método Selection":
                 array = SelectionSort(array);
                 break;
-            case "Shell":
+            case "Método Shell":
                 array = ShellSort(array);
                 break;
             default:

@@ -1,10 +1,12 @@
+package GUI;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
     ImageIcon image = new ImageIcon("Images/umbrella.png");
     private MainFrameComponents components = new MainFrameComponents();
-    MainFrame(){
+    public MainFrame(){
         //JScrollPane for Data_Grid
         JScrollPane data_panel = new JScrollPane(components.DataGrid());
         data_panel.setBounds(400, 230, 500, 200);

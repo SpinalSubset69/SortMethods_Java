@@ -1,3 +1,5 @@
+package models;
+
 import java.util.Date;
 
 public class Report{
@@ -7,7 +9,7 @@ public class Report{
     private String CreateAt;
     private long time;
 
-    Report(){
+    public Report(){
         long milisec = System.currentTimeMillis();
         Date dt = new Date(milisec);
         this.CreateAt = dt.toString();
